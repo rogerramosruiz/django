@@ -4,7 +4,11 @@ from .forms import CorredorForm
 
 # Create your views here.
 def listar_corredores(request):
+    por = request.GET.get('por')
+    orden_por = ('codigo', 'nombreCompleto', 'comision', 'codigoAPS')
     corredores = Corredor.objects.filter(isActive=1)
+    if por in orden_por:
+        corredores = corredores.order_by(por)
     return render(request, 'list.html', context={'corredores': corredores})
 
 
